@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TestEletricsInfoMapper">
+    
+    <resultMap type="TestEletricsInfo" id="TestEletricsInfoResult">
+        <result property="id"    column="id"    />
+        <result property="eletricsId"    column="eletrics_id"    />
+        <result property="eletricsSupplier"    column="eletrics_supplier"    />
+        <result property="eletricsModel"    column="eletrics_model"    />
+        <result property="year"    column="year"    />
+        <result property="ymonth"    column="ymonth"    />
+        <result property="ymday"    column="ymday"    />
+        <result property="latitudeLongitude"    column="latitude_longitude"    />
+        <result property="enable"    column="enable"    />
+        <result property="homeLocation"    column="home_location"    />
+        <result property="interiorStructure"    column="interior_structure"    />
+        <result property="getwayChannel"    column="getway_channel"    />
+        <result property="operate"    column="operate"    />
+    </resultMap>
+
+    <sql id="selectTestEletricsInfoVo">
+        select id, eletrics_id, eletrics_supplier, eletrics_model, year, ymonth, ymday, latitude_longitude, enable, home_location, interior_structure, getway_channel, operate from test_eletrics_info
+    </sql>
+
+    <select id="selectTestEletricsInfoList" parameterType="TestEletricsInfo" resultMap="TestEletricsInfoResult">
+        <include refid="selectTestEletricsInfoVo"/>
+        <where>  
+            <if test="eletricsId != null "> and eletrics_id = #{eletricsId}</if>
+            <if test="eletricsSupplier != null  and eletricsSupplier != ''"> and eletrics_supplier = #{eletricsSupplier}</if>
+            <if test="eletricsModel != null  and eletricsModel != ''"> and eletrics_model = #{eletricsModel}</if>
+            <if test="year != null "> and year = #{year}</if>
+            <if test="ymonth != null "> and ymonth = #{ymonth}</if>
+            <if test="ymday != null "> and ymday = #{ymday}</if>
+            <if test="latitudeLongitude != null "> and latitude_longitude = #{latitudeLongitude}</if>
+            <if test="enable != null  and enable != ''"> and enable = #{enable}</if>
+            <if test="homeLocation != null  and homeLocation != ''"> and home_location = #{homeLocation}</if>
+            <if test="interiorStructure != null  and interiorStructure != ''"> and interior_structure = #{interiorStructure}</if>
+            <if test="getwayChannel != null  and getwayChannel != ''"> and getway_channel = #{getwayChannel}</if>
+            <if test="operate != null  and operate != ''"> and operate = #{operate}</if>
+        </where>
+    </select>
+    
+    <select id="selectTestEletricsInfoById" parameterType="Long" resultMap="TestEletricsInfoResult">
+        <include refid="selectTestEletricsInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTestEletricsInfo" parameterType="TestEletricsInfo">
+        insert into test_eletrics_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="eletricsId != null">eletrics_id,</if>
+            <if test="eletricsSupplier != null">eletrics_supplier,</if>
+            <if test="eletricsModel != null">eletrics_model,</if>
+            <if test="year != null">year,</if>
+            <if test="ymonth != null">ymonth,</if>
+            <if test="ymday != null">ymday,</if>
+            <if test="latitudeLongitude != null">latitude_longitude,</if>
+            <if test="enable != null and enable != ''">enable,</if>
+            <if test="homeLocation != null">home_location,</if>
+            <if test="interiorStructure != null">interior_structure,</if>
+            <if test="getwayChannel != null">getway_channel,</if>
+            <if test="operate != null">operate,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="eletricsId != null">#{eletricsId},</if>
+            <if test="eletricsSupplier != null">#{eletricsSupplier},</if>
+            <if test="eletricsModel != null">#{eletricsModel},</if>
+            <if test="year != null">#{year},</if>
+            <if test="ymonth != null">#{ymonth},</if>
+            <if test="ymday != null">#{ymday},</if>
+            <if test="latitudeLongitude != null">#{latitudeLongitude},</if>
+            <if test="enable != null and enable != ''">#{enable},</if>
+            <if test="homeLocation != null">#{homeLocation},</if>
+            <if test="interiorStructure != null">#{interiorStructure},</if>
+            <if test="getwayChannel != null">#{getwayChannel},</if>
+            <if test="operate != null">#{operate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTestEletricsInfo" parameterType="TestEletricsInfo">
+        update test_eletrics_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="eletricsId != null">eletrics_id = #{eletricsId},</if>
+            <if test="eletricsSupplier != null">eletrics_supplier = #{eletricsSupplier},</if>
+            <if test="eletricsModel != null">eletrics_model = #{eletricsModel},</if>
+            <if test="year != null">year = #{year},</if>
+            <if test="ymonth != null">ymonth = #{ymonth},</if>
+            <if test="ymday != null">ymday = #{ymday},</if>
+            <if test="latitudeLongitude != null">latitude_longitude = #{latitudeLongitude},</if>
+            <if test="enable != null and enable != ''">enable = #{enable},</if>
+            <if test="homeLocation != null">home_location = #{homeLocation},</if>
+            <if test="interiorStructure != null">interior_structure = #{interiorStructure},</if>
+            <if test="getwayChannel != null">getway_channel = #{getwayChannel},</if>
+            <if test="operate != null">operate = #{operate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTestEletricsInfoById" parameterType="Long">
+        delete from test_eletrics_info where id = #{id}
+    </delete>
+
+    <delete id="deleteTestEletricsInfoByIds" parameterType="String">
+        delete from test_eletrics_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
