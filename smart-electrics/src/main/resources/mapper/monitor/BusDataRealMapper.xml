@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BusDataRealMapper">
+    
+    <resultMap type="BusDataReal" id="BusDataRealResult">
+        <result property="id"    column="id"    />
+        <result property="factorId"    column="factor_id"    />
+        <result property="factorName"    column="factor_name"    />
+        <result property="oldValue"    column="old_value"    />
+        <result property="value"    column="value"    />
+        <result property="unit"    column="unit"    />
+        <result property="quality"    column="quality"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="updateNum"    column="update_num"    />
+    </resultMap>
+
+    <sql id="selectBusDataRealVo">
+        select id, factor_id, factor_name, old_value, value, unit, quality, update_date, update_num from bus_data_real
+    </sql>
+
+    <select id="selectBusDataRealList" parameterType="BusDataReal" resultMap="BusDataRealResult">
+        <include refid="selectBusDataRealVo"/>
+        <where>  
+            <if test="factorId != null "> and factor_id = #{factorId}</if>
+            <if test="factorName != null  and factorName != ''"> and factor_name like concat('%', #{factorName}, '%')</if>
+            <if test="oldValue != null  and oldValue != ''"> and old_value = #{oldValue}</if>
+            <if test="value != null  and value != ''"> and value = #{value}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="quality != null  and quality != ''"> and quality = #{quality}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            <if test="updateNum != null "> and update_num = #{updateNum}</if>
+        </where>
+    </select>
+    
+    <select id="selectBusDataRealById" parameterType="Long" resultMap="BusDataRealResult">
+        <include refid="selectBusDataRealVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBusDataReal" parameterType="BusDataReal">
+        insert into bus_data_real
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="factorId != null">factor_id,</if>
+            <if test="factorName != null">factor_name,</if>
+            <if test="oldValue != null">old_value,</if>
+            <if test="value != null">value,</if>
+            <if test="unit != null">unit,</if>
+            <if test="quality != null">quality,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="updateNum != null">update_num,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="factorId != null">#{factorId},</if>
+            <if test="factorName != null">#{factorName},</if>
+            <if test="oldValue != null">#{oldValue},</if>
+            <if test="value != null">#{value},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="quality != null">#{quality},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+            <if test="updateNum != null">#{updateNum},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBusDataReal" parameterType="BusDataReal">
+        update bus_data_real
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="factorId != null">factor_id = #{factorId},</if>
+            <if test="factorName != null">factor_name = #{factorName},</if>
+            <if test="oldValue != null">old_value = #{oldValue},</if>
+            <if test="value != null">value = #{value},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="quality != null">quality = #{quality},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+            <if test="updateNum != null">update_num = #{updateNum},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBusDataRealById" parameterType="Long">
+        delete from bus_data_real where id = #{id}
+    </delete>
+
+    <delete id="deleteBusDataRealByIds" parameterType="String">
+        delete from bus_data_real where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

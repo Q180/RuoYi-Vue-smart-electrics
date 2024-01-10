@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BusDataHistoryMapper">
+    
+    <resultMap type="BusDataHistory" id="BusDataHistoryResult">
+        <result property="id"    column="id"    />
+        <result property="factorId"    column="factor_id"    />
+        <result property="factorName"    column="factor_name"    />
+        <result property="oldValue"    column="old_value"    />
+        <result property="unit"    column="unit"    />
+        <result property="quality"    column="quality"    />
+        <result property="year"    column="year"    />
+        <result property="ymont"    column="ymont"    />
+        <result property="yweek"    column="yweek"    />
+        <result property="yday"    column="yday"    />
+        <result property="ytime"    column="ytime"    />
+    </resultMap>
+
+    <sql id="selectBusDataHistoryVo">
+        select id, factor_id, factor_name, old_value, unit, quality, year, ymont, yweek, yday, ytime from bus_data_history
+    </sql>
+
+    <select id="selectBusDataHistoryList" parameterType="BusDataHistory" resultMap="BusDataHistoryResult">
+        <include refid="selectBusDataHistoryVo"/>
+        <where>  
+            <if test="factorId != null "> and factor_id = #{factorId}</if>
+            <if test="factorName != null  and factorName != ''"> and factor_name like concat('%', #{factorName}, '%')</if>
+            <if test="oldValue != null  and oldValue != ''"> and old_value = #{oldValue}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="quality != null  and quality != ''"> and quality = #{quality}</if>
+            <if test="year != null "> and year = #{year}</if>
+            <if test="ymont != null "> and ymont = #{ymont}</if>
+            <if test="yweek != null "> and yweek = #{yweek}</if>
+            <if test="yday != null "> and yday = #{yday}</if>
+            <if test="ytime != null "> and ytime = #{ytime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBusDataHistoryById" parameterType="Long" resultMap="BusDataHistoryResult">
+        <include refid="selectBusDataHistoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBusDataHistory" parameterType="BusDataHistory">
+        insert into bus_data_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="factorId != null">factor_id,</if>
+            <if test="factorName != null">factor_name,</if>
+            <if test="oldValue != null">old_value,</if>
+            <if test="unit != null">unit,</if>
+            <if test="quality != null">quality,</if>
+            <if test="year != null">year,</if>
+            <if test="ymont != null">ymont,</if>
+            <if test="yweek != null">yweek,</if>
+            <if test="yday != null">yday,</if>
+            <if test="ytime != null">ytime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="factorId != null">#{factorId},</if>
+            <if test="factorName != null">#{factorName},</if>
+            <if test="oldValue != null">#{oldValue},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="quality != null">#{quality},</if>
+            <if test="year != null">#{year},</if>
+            <if test="ymont != null">#{ymont},</if>
+            <if test="yweek != null">#{yweek},</if>
+            <if test="yday != null">#{yday},</if>
+            <if test="ytime != null">#{ytime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBusDataHistory" parameterType="BusDataHistory">
+        update bus_data_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="factorId != null">factor_id = #{factorId},</if>
+            <if test="factorName != null">factor_name = #{factorName},</if>
+            <if test="oldValue != null">old_value = #{oldValue},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="quality != null">quality = #{quality},</if>
+            <if test="year != null">year = #{year},</if>
+            <if test="ymont != null">ymont = #{ymont},</if>
+            <if test="yweek != null">yweek = #{yweek},</if>
+            <if test="yday != null">yday = #{yday},</if>
+            <if test="ytime != null">ytime = #{ytime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBusDataHistoryById" parameterType="Long">
+        delete from bus_data_history where id = #{id}
+    </delete>
+
+    <delete id="deleteBusDataHistoryByIds" parameterType="String">
+        delete from bus_data_history where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
