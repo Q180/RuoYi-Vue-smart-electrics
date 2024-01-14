@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BusAlarmOperLogMapper">
+    
+    <resultMap type="BusAlarmOperLog" id="BusAlarmOperLogResult">
+        <result property="id"    column="id"    />
+        <result property="hisSnowId"    column="his_snow_id"    />
+        <result property="operUserId"    column="oper_user_id"    />
+        <result property="operUserName"    column="oper_user_name"    />
+        <result property="operTime"    column="oper_time"    />
+        <result property="operType"    column="oper_type"    />
+    </resultMap>
+
+    <sql id="selectBusAlarmOperLogVo">
+        select id, his_snow_id, oper_user_id, oper_user_name, oper_time, oper_type from bus_alarm_oper_log
+    </sql>
+
+    <select id="selectBusAlarmOperLogList" parameterType="BusAlarmOperLog" resultMap="BusAlarmOperLogResult">
+        <include refid="selectBusAlarmOperLogVo"/>
+        <where>  
+            <if test="hisSnowId != null  and hisSnowId != ''"> and his_snow_id = #{hisSnowId}</if>
+            <if test="operUserId != null "> and oper_user_id = #{operUserId}</if>
+            <if test="operUserName != null  and operUserName != ''"> and oper_user_name like concat('%', #{operUserName}, '%')</if>
+            <if test="operTime != null "> and oper_time = #{operTime}</if>
+            <if test="operType != null "> and oper_type = #{operType}</if>
+        </where>
+    </select>
+    
+    <select id="selectBusAlarmOperLogById" parameterType="Long" resultMap="BusAlarmOperLogResult">
+        <include refid="selectBusAlarmOperLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBusAlarmOperLog" parameterType="BusAlarmOperLog" useGeneratedKeys="true" keyProperty="id">
+        insert into bus_alarm_oper_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hisSnowId != null">his_snow_id,</if>
+            <if test="operUserId != null">oper_user_id,</if>
+            <if test="operUserName != null">oper_user_name,</if>
+            <if test="operTime != null">oper_time,</if>
+            <if test="operType != null">oper_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hisSnowId != null">#{hisSnowId},</if>
+            <if test="operUserId != null">#{operUserId},</if>
+            <if test="operUserName != null">#{operUserName},</if>
+            <if test="operTime != null">#{operTime},</if>
+            <if test="operType != null">#{operType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBusAlarmOperLog" parameterType="BusAlarmOperLog">
+        update bus_alarm_oper_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hisSnowId != null">his_snow_id = #{hisSnowId},</if>
+            <if test="operUserId != null">oper_user_id = #{operUserId},</if>
+            <if test="operUserName != null">oper_user_name = #{operUserName},</if>
+            <if test="operTime != null">oper_time = #{operTime},</if>
+            <if test="operType != null">oper_type = #{operType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBusAlarmOperLogById" parameterType="Long">
+        delete from bus_alarm_oper_log where id = #{id}
+    </delete>
+
+    <delete id="deleteBusAlarmOperLogByIds" parameterType="String">
+        delete from bus_alarm_oper_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
