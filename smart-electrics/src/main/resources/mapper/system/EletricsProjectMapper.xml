@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.EletricsProjectMapper">
+    
+    <resultMap type="EletricsProject" id="EletricsProjectResult">
+        <result property="id"    column="id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="comment"    column="comment"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="homeLocation"    column="home_location"    />
+    </resultMap>
+
+    <sql id="selectEletricsProjectVo">
+        select id, project_name, comment, create_time, home_location from eletrics_project
+    </sql>
+
+    <select id="selectEletricsProjectList" parameterType="EletricsProject" resultMap="EletricsProjectResult">
+        <include refid="selectEletricsProjectVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="comment != null  and comment != ''"> and comment = #{comment}</if>
+            <if test="homeLocation != null  and homeLocation != ''"> and home_location = #{homeLocation}</if>
+        </where>
+    </select>
+    
+    <select id="selectEletricsProjectById" parameterType="Long" resultMap="EletricsProjectResult">
+        <include refid="selectEletricsProjectVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEletricsProject" parameterType="EletricsProject">
+        insert into eletrics_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="comment != null">comment,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="homeLocation != null">home_location,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="comment != null">#{comment},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="homeLocation != null">#{homeLocation},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEletricsProject" parameterType="EletricsProject">
+        update eletrics_project
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="comment != null">comment = #{comment},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="homeLocation != null">home_location = #{homeLocation},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEletricsProjectById" parameterType="Long">
+        delete from eletrics_project where id = #{id}
+    </delete>
+
+    <delete id="deleteEletricsProjectByIds" parameterType="String">
+        delete from eletrics_project where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
