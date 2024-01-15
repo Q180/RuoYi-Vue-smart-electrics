@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BoxDataRealMapper">
+    
+    <resultMap type="BoxDataReal" id="BoxDataRealResult">
+        <result property="id"    column="id"    />
+        <result property="boxname"    column="boxname"    />
+        <result property="area"    column="area"    />
+        <result property="state"    column="state"    />
+        <result property="icon"    column="icon"    />
+        <result property="number"    column="number"    />
+        <result property="devicename"    column="devicename"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="produceyear"    column="produceyear"    />
+        <result property="electricsctrreal"    column="electricsctrreal"    />
+        <result property="lockreal"    column="lockreal"    />
+        <result property="networkreal"    column="networkreal"    />
+        <result property="cellreal"    column="cellreal"    />
+        <result property="volcurreal"    column="volcurreal"    />
+    </resultMap>
+
+    <sql id="selectBoxDataRealVo">
+        select id, boxname, area, state, icon, number, devicename, manufacturer, produceyear, electricsctrreal, lockreal, networkreal, cellreal, volcurreal from box_data_real
+    </sql>
+
+    <select id="selectBoxDataRealList" parameterType="BoxDataReal" resultMap="BoxDataRealResult">
+        <include refid="selectBoxDataRealVo"/>
+        <where>  
+            <if test="boxname != null  and boxname != ''"> and boxname like concat('%', #{boxname}, '%')</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="devicename != null  and devicename != ''"> and devicename like concat('%', #{devicename}, '%')</if>
+            <if test="manufacturer != null  and manufacturer != ''"> and manufacturer = #{manufacturer}</if>
+            <if test="produceyear != null  and produceyear != ''"> and produceyear = #{produceyear}</if>
+            <if test="electricsctrreal != null  and electricsctrreal != ''"> and electricsctrreal = #{electricsctrreal}</if>
+            <if test="lockreal != null  and lockreal != ''"> and lockreal = #{lockreal}</if>
+            <if test="networkreal != null  and networkreal != ''"> and networkreal = #{networkreal}</if>
+            <if test="cellreal != null  and cellreal != ''"> and cellreal = #{cellreal}</if>
+            <if test="volcurreal != null  and volcurreal != ''"> and volcurreal = #{volcurreal}</if>
+        </where>
+    </select>
+    
+    <select id="selectBoxDataRealById" parameterType="String" resultMap="BoxDataRealResult">
+        <include refid="selectBoxDataRealVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBoxDataReal" parameterType="BoxDataReal" useGeneratedKeys="true" keyProperty="id">
+        insert into box_data_real
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="boxname != null">boxname,</if>
+            <if test="area != null">area,</if>
+            <if test="state != null">state,</if>
+            <if test="icon != null">icon,</if>
+            <if test="number != null">number,</if>
+            <if test="devicename != null">devicename,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="produceyear != null">produceyear,</if>
+            <if test="electricsctrreal != null">electricsctrreal,</if>
+            <if test="lockreal != null">lockreal,</if>
+            <if test="networkreal != null">networkreal,</if>
+            <if test="cellreal != null">cellreal,</if>
+            <if test="volcurreal != null">volcurreal,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="boxname != null">#{boxname},</if>
+            <if test="area != null">#{area},</if>
+            <if test="state != null">#{state},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="number != null">#{number},</if>
+            <if test="devicename != null">#{devicename},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="produceyear != null">#{produceyear},</if>
+            <if test="electricsctrreal != null">#{electricsctrreal},</if>
+            <if test="lockreal != null">#{lockreal},</if>
+            <if test="networkreal != null">#{networkreal},</if>
+            <if test="cellreal != null">#{cellreal},</if>
+            <if test="volcurreal != null">#{volcurreal},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBoxDataReal" parameterType="BoxDataReal">
+        update box_data_real
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="boxname != null">boxname = #{boxname},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="devicename != null">devicename = #{devicename},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="produceyear != null">produceyear = #{produceyear},</if>
+            <if test="electricsctrreal != null">electricsctrreal = #{electricsctrreal},</if>
+            <if test="lockreal != null">lockreal = #{lockreal},</if>
+            <if test="networkreal != null">networkreal = #{networkreal},</if>
+            <if test="cellreal != null">cellreal = #{cellreal},</if>
+            <if test="volcurreal != null">volcurreal = #{volcurreal},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBoxDataRealById" parameterType="String">
+        delete from box_data_real where id = #{id}
+    </delete>
+
+    <delete id="deleteBoxDataRealByIds" parameterType="String">
+        delete from box_data_real where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

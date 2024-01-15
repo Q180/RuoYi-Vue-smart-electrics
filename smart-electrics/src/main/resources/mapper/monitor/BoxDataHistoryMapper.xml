@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BoxDataHistoryMapper">
+    
+    <resultMap type="BoxDataHistory" id="BoxDataHistoryResult">
+        <result property="id"    column="id"    />
+        <result property="boxname"    column="boxname"    />
+        <result property="area"    column="area"    />
+        <result property="number"    column="number"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="produceyear"    column="produceyear"    />
+        <result property="electricsctrreal"    column="electricsctrreal"    />
+        <result property="lockreal"    column="lockreal"    />
+        <result property="networkreal"    column="networkreal"    />
+        <result property="cellreal"    column="cellreal"    />
+        <result property="volcurreal"    column="volcurreal"    />
+        <result property="recordtime"    column="recordtime"    />
+    </resultMap>
+
+    <sql id="selectBoxDataHistoryVo">
+        select id, boxname, area, number, manufacturer, produceyear, electricsctrreal, lockreal, networkreal, cellreal, volcurreal, recordtime from box_data_history
+    </sql>
+
+    <select id="selectBoxDataHistoryList" parameterType="BoxDataHistory" resultMap="BoxDataHistoryResult">
+        <include refid="selectBoxDataHistoryVo"/>
+        <where>  
+            <if test="boxname != null  and boxname != ''"> and boxname like concat('%', #{boxname}, '%')</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="manufacturer != null  and manufacturer != ''"> and manufacturer = #{manufacturer}</if>
+            <if test="produceyear != null  and produceyear != ''"> and produceyear = #{produceyear}</if>
+            <if test="electricsctrreal != null  and electricsctrreal != ''"> and electricsctrreal = #{electricsctrreal}</if>
+            <if test="lockreal != null  and lockreal != ''"> and lockreal = #{lockreal}</if>
+            <if test="networkreal != null  and networkreal != ''"> and networkreal = #{networkreal}</if>
+            <if test="cellreal != null  and cellreal != ''"> and cellreal = #{cellreal}</if>
+            <if test="volcurreal != null  and volcurreal != ''"> and volcurreal = #{volcurreal}</if>
+            <if test="params.beginRecordtime != null and params.beginRecordtime != '' and params.endRecordtime != null and params.endRecordtime != ''"> and recordtime between #{params.beginRecordtime} and #{params.endRecordtime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBoxDataHistoryById" parameterType="String" resultMap="BoxDataHistoryResult">
+        <include refid="selectBoxDataHistoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBoxDataHistory" parameterType="BoxDataHistory" useGeneratedKeys="true" keyProperty="id">
+        insert into box_data_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="boxname != null">boxname,</if>
+            <if test="area != null">area,</if>
+            <if test="number != null">number,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="produceyear != null">produceyear,</if>
+            <if test="electricsctrreal != null">electricsctrreal,</if>
+            <if test="lockreal != null">lockreal,</if>
+            <if test="networkreal != null">networkreal,</if>
+            <if test="cellreal != null">cellreal,</if>
+            <if test="volcurreal != null">volcurreal,</if>
+            <if test="recordtime != null">recordtime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="boxname != null">#{boxname},</if>
+            <if test="area != null">#{area},</if>
+            <if test="number != null">#{number},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="produceyear != null">#{produceyear},</if>
+            <if test="electricsctrreal != null">#{electricsctrreal},</if>
+            <if test="lockreal != null">#{lockreal},</if>
+            <if test="networkreal != null">#{networkreal},</if>
+            <if test="cellreal != null">#{cellreal},</if>
+            <if test="volcurreal != null">#{volcurreal},</if>
+            <if test="recordtime != null">#{recordtime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBoxDataHistory" parameterType="BoxDataHistory">
+        update box_data_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="boxname != null">boxname = #{boxname},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="produceyear != null">produceyear = #{produceyear},</if>
+            <if test="electricsctrreal != null">electricsctrreal = #{electricsctrreal},</if>
+            <if test="lockreal != null">lockreal = #{lockreal},</if>
+            <if test="networkreal != null">networkreal = #{networkreal},</if>
+            <if test="cellreal != null">cellreal = #{cellreal},</if>
+            <if test="volcurreal != null">volcurreal = #{volcurreal},</if>
+            <if test="recordtime != null">recordtime = #{recordtime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBoxDataHistoryById" parameterType="String">
+        delete from box_data_history where id = #{id}
+    </delete>
+
+    <delete id="deleteBoxDataHistoryByIds" parameterType="String">
+        delete from box_data_history where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
