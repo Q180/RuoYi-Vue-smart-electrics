@@ -6,17 +6,21 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 【请填写功能名称】对象 eletrics_project
+ * 项目管理对象 electrics_project
  * 
- * @author ruoyi
- * @date 2024-01-10
+ * @author yangkun
+ * @date 2024-01-15
  */
-public class EletricsProject extends BaseEntity
+public class ElectricsProject extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** $column.columnComment */
-    private Long id;
+    /** id */
+    private String id;
+
+    /** 项目编号 */
+    @Excel(name = "项目编号")
+    private Long projectId;
 
     /** 项目名称 */
     @Excel(name = "项目名称")
@@ -30,17 +34,23 @@ public class EletricsProject extends BaseEntity
     @Excel(name = "归属区")
     private String homeLocation;
 
-    @Excel(name = "创建时间")
-    private String createTime;
-
-    public void setId(Long id) 
+    public void setId(String id) 
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public String getId() 
     {
         return id;
+    }
+    public void setProjectId(Long projectId) 
+    {
+        this.projectId = projectId;
+    }
+
+    public Long getProjectId() 
+    {
+        return projectId;
     }
     public void setProjectName(String projectName) 
     {
@@ -60,12 +70,6 @@ public class EletricsProject extends BaseEntity
     {
         return comment;
     }
-
-//    public String getTimeCreate(){return createTime;}
-//
-//    public void setTimeCreate(String createTime){this.createTime=createTime;
-//    }
-
     public void setHomeLocation(String homeLocation) 
     {
         this.homeLocation = homeLocation;
@@ -80,6 +84,7 @@ public class EletricsProject extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("projectId", getProjectId())
             .append("projectName", getProjectName())
             .append("comment", getComment())
             .append("createTime", getCreateTime())
